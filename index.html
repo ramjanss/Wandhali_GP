@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ग्रा म-पंचायत Wandhali</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <style>
+    body{font-family: system-ui, Arial, 'Noto Sans Devanagari', sans-serif; margin:0; padding:12px; background:#f7f7f7;}
+    .container{max-width:980px;margin:0 auto;background:#fff;padding:18px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+    h1,h2{margin:6px 0}
+    table{width:100%;border-collapse:collapse;margin-top:8px}
+    th,td{border:1px solid #e0e0e0;padding:8px;text-align:left}
+    #map{height:360px;margin-top:10px;border-radius:6px}
+    .scheme{border:1px solid #eee;padding:10px;border-radius:6px;margin:6px 0;background:#fafafa}
+    a{color: #0645ad}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>ग्रामीण पंचायत — Wandhali (Warora, Chandrapur)</h1>
+    <p>जनसंख्या (2011): <strong>1009</strong></p>
+
+    <h2>पंचायत समिति / पदनाम</h2>
+    <table id="committees-table">
+      <thead><tr><th>पद</th><th>नाम</th><th>संपर्क</th></tr></thead>
+      <tbody></tbody>
+    </table>
+
+    <h2>ग्राम का नक्शा</h2>
+    <div id="map"></div>
+
+    <h2>प्रासंगिक योजनाएँ</h2>
+    <div id="schemes-list"></div>
+
+    <p style="margin-top:12px;font-size:13px;color:#666">डेटा स्रोत: ग्राम-सूचना / स्थानीय पैनल; आधिकारिक योजनाओं के लिए विभागीय लिंक देखें।</p>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const data = {
+      village:{name:"Wandhali", lat:20.29766, lng:78.89014, population:1009},
+      committees:[
+        {designation:"Sarpanch", name:"रामु प्रसाद", contact:"-"},
+        {designation:"Up Sarpanch", name:"सीता देवी", contact:"-"}
+      ],
+      schemes:[
+        {title:"प्रधानमंत्री आवास योजना (PMAY)", desc:"आवास के लिए सहायता", link:"https://mahaschemes.maharashtra.gov.in", lastUpdated:"2025-04-01"}
+      ]
+    };
+
+    // committees render
+    const tbody = document.querySelector('#committees-table tbody');
+    data.committees.forEach(c=>{
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td>${c.designation}</td><td>${c.name}</td><td>${c.contact||'-'}</td>`;
+      tbody.appendChild(tr);
+    });
+
+    // schemes render
+    const schemesWrap=document.getElementById('schemes-list');
+    data.schemes.forEach(s=>{
+      const d=document.createElement('div'); d.className='scheme';
+      d.innerHTML=`<strong>${s.title}</strong><p>${s.desc}</p><p><a href="${s.link}" target="_blank" rel="noopener">आधिकारिक जानकारी</a> • अपडेट: ${s.lastUpdated}</p>`;
+      schemesWrap.appendChild(d);
+    });
+
+    // Leaflet map
+    const map = L.map('map').setView([data.village.lat, data.village.lng], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+    L.marker([data.village.lat, data.village.lng]).addTo(map).bindPopup(data.village.name);
+  </script>
+</body>
+</html>

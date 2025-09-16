@@ -1,0 +1,18 @@
+{
+  "village": {
+    "name": "Wandhali",
+    "taluka": "Warora",
+    "district": "Chandrapur",
+    "state": "Maharashtra",
+    "latitude": 20.29766,
+    "longitude": 78.89014,
+    "population": 1009
+  },
+  "committees": [
+    {"designation":"Sarpanch","name":"रामु प्रसाद","phone":"91-9XXXXXXXXX","photo":""},
+    {"designation":"Up Sarpanch","name":"सीता देवी","phone":"91-9XXXXXXXXX","photo":""}
+  ],
+  "schemes": [
+    {"title":"PMAY / आवास योजना", "summary":"घरों के लिए सहायता", "link":"https://mahaschemes.maharashtra.gov.in", "lastUpdated":"2025-04-01"}
+  ]
+}
