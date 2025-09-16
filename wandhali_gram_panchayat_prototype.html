@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="mr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ग्रामपंचायत वांधली (Wandhali)</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    :root{--accent:#0b5ed7;--muted:#6b7280;--bg:#f9fafb}
+    body{margin:0;font-family:'Noto Sans',system-ui,sans-serif;background:var(--bg);color:#111}
+    header.hero{position:relative;height:280px;display:flex;align-items:center;justify-content:center;color:#fff;background:url('images/banner.jpg') center/cover}
+    header.hero::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.38)}
+    header.hero .content{position:relative;z-index:1;text-align:center}
+    header.hero h1{font-size:32px;margin:0;font-weight:700}
+    header.hero p{margin:6px 0 0}
+    nav{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,0.1);padding:10px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+    nav a{margin-left:12px;text-decoration:none;color:var(--accent);font-weight:600}
+    .wrap{max-width:1100px;margin:0 auto;padding:20px}
+    h2{margin-top:28px;font-size:22px;color:var(--accent)}
+
+    /* thumbnail cards for key people */
+    .thumb-card{display:flex;gap:12px;align-items:center;background:transparent;padding:6px;border-radius:8px}
+    .thumb-card .thumb{width:76px;height:76px;border-radius:50%;object-fit:cover;flex-shrink:0;box-shadow:0 1px 6px rgba(16,24,40,0.08)}
+    .thumb-card .info{padding-left:4px}
+    .thumb-card .small{font-size:13px;color:var(--muted)}
+
+    /* member grid with small thumbnails */
+    .member-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:10px}
+    .member{display:flex;align-items:center;gap:10px;background:#fff;padding:10px;border-radius:10px;box-shadow:0 1px 6px rgba(16,24,40,0.04)}
+    .member img{width:64px;height:64px;border-radius:8px;object-fit:cover;flex-shrink:0}
+    .mname{font-weight:600;font-size:14px}
+    .msub{font-size:13px;color:var(--muted)}
+
+    /* map and right column */
+    #map{height:250px;border-radius:12px;margin-top:6px}
+    aside .small-card{background:#fff;padding:12px;border-radius:10px;box-shadow:0 1px 6px rgba(16,24,40,0.04)}
+    .notice-list{padding-left:16px;margin:8px 0}
+    .notice-list li{margin-bottom:6px}
+
+    /* schemes */
+    .schemes{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:14px}
+    .scheme{background:#fff;padding:14px;border-radius:12px;box-shadow:0 1px 5px rgba(0,0,0,0.05)}
+    .scheme h4{margin:0 0 6px;font-size:16px;color:var(--accent)}
+
+    /* gallery */
+    .gallery{display:flex;overflow-x:auto;gap:10px;padding:6px 0}
+    .gallery img{width:280px;height:180px;object-fit:cover;border-radius:12px;flex-shrink:0}
+
+    footer{background:#111;color:#eee;padding:20px;margin-top:30px;font-size:14px;text-align:center}
+
+    /* responsive tweaks */
+    @media(max-width:800px){
+      .member-grid{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));}
+      #map{height:220px}
+      .gallery img{width:220px;height:140px}
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="content">
+      <h1>ग्रामपंचायत वंधली</h1>
+      <p>Taluka Warora • District Chandrapur • Maharashtra</p>
+    </div>
+  </header>
+
+  <nav>
+    <div><strong>Wandhali GP</strong></div>
+    <div>
+      <a href="#members">Members</a>
+      <a href="#map-section">Map</a>
+      <a href="#schemes">Schemes</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <!-- Key People (Medium thumbnails) -->
+    <h2 id="members">Sarpanch & Gram Sevak</h2>
+    <div style="display:flex;gap:28px;align-items:center">
+      <div class="thumb-card">
+        <img src="images/sarpanch.jpg" alt="Sarpanch photo" class="thumb" />
+        <div class="info"><strong>Pravin M. Bhoyar</strong><div class="small">Sarpanch • 7588972246</div></div>
+      </div>
+      <div class="thumb-card">
+        <img src="images/gram-sevak.jpg" alt="Gram Sevak photo" class="thumb" />
+        <div class="info"><strong>Sunita Rajput</strong><div class="small">Gram Sevak • +91-123456789</div></div>
+      </div>
+    </div>
+
+    <!-- Members grid (thumbnails) -->
+    <h2 style="margin-top:18px">Committee Members</h2>
+    <div class="member-grid">
+      <div class="member"><img src="images/member1.jpg" alt="member"/><div class="mname">Anil Sheshrao Thawri</div><div class="msub">Up-Sarpanch</div></div>
+      <div class="member"><img src="images/member2.jpg" alt="member"/><div class="mname">Sanghamitra Anand Bhalerao</div><div class="msub">Member</div></div>
+      <div class="member"><img src="images/member3.jpg" alt="member"/><div class="mname">Sharda Vilas Choudhari</div><div class="msub">Member</div></div>
+      <div class="member"><img src="images/member4.jpg" alt="member"/><div class="mname">Rupal Manohar Dhote</div><div class="msub">Member</div></div>
+      <div class="member"><img src="images/member5.jpg" alt="member"/><div class="mname">Suchita Ananta Kumre</div><div class="msub">Member</div></div>
+      <div class="member"><img src="images/member6.jpg" alt="member"/><div class="mname">Mayavati Bajirao Tekam</div><div class="msub">Member</div></div>
+      <div class="member"><img src="images/member7.jpg" alt="member"/><div class="mname">Sagar Sanjay Bhoyar</div><div class="msub">Member</div></div>
+      <div class="member"><img src="images/member8.jpg" alt="member"/><div class="mname">Shubham Ramdas Somalkar</div><div class="msub">Member</div></div>
+    </div>
+
+    <!-- Map + Quick facts & Notices column -->
+    <div style="display:grid;grid-template-columns:1fr 320px;gap:16px;margin-top:20px;align-items:start">
+      <div>
+        <h2 id="map-section">Village Map</h2>
+        <div id="map" style="height:250px;border-radius:12px;overflow:hidden"></div>
+      </div>
+
+      <aside style="position:relative">
+        <div class="card small-card">
+          <h4 style="margin:0 0 6px">Village Quick Facts</h4>
+          <div class="small"><strong>Population:</strong> 1009</div>
+          <div class="small"><strong>PIN:</strong> 442907</div>
+          <div class="small"><strong>Taluka:</strong> Warora</div>
+          <div class="small"><strong>District:</strong> Chandrapur</div>
+          <div class="small" style="margin-top:6px"><strong>Office:</strong><br/>Main Road, Gram Panchayat Wandhali</div>
+        </div>
+
+        <div class="card small-card" style="margin-top:12px">
+          <h4 style="margin:0 0 6px">Latest Notices</h4>
+          <ul class="notice-list">
+            <li><a href="#">ग्रामसभा बैठक - 15 Aug 2025 (PDF)</a></li>
+            <li><a href="#">Water supply maintenance notice - 01 Jul 2025</a></li>
+            <li><a href="#">Road repair tender - 10 Jun 2025</a></li>
+          </ul>
+        </div>
+
+        <div class="card small-card" style="margin-top:12px">
+          <h4 style="margin:0 0 6px">Important Links</h4>
+          <div class="small"><a href="https://aaplesarkar.maharashtra.gov.in" target="_blank">Aaple Sarkar Portal</a></div>
+          <div class="small"><a href="https://nrega.nic.in" target="_blank">MGNREGA</a></div>
+          <div class="small"><a href="https://mahaschemes.maharashtra.gov.in" target="_blank">Maharashtra Schemes</a></div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Schemes (kept below) -->
+    <h2 id="schemes">Top Schemes</h2>
+    <div class="schemes">
+      <div class="scheme"><h4>Pradhan Mantri Awas Yojana</h4><p>आवासासाठी आर्थिक मदत.</p><a href="https://aaplesarkar.maharashtra.gov.in" target="_blank">Details</a></div>
+      <div class="scheme"><h4>Mahatma Jyotiba Phule Jan Arogya</h4><p>आरोग्य सुविधा व मदत.</p><a href="https://aaplesarkar.maharashtra.gov.in">Details</a></div>
+      <div class="scheme"><h4>MGNREGA</h4><p>ग्रामीण रोजगार हमी योजना.</p><a href="https://nrega.nic.in">Details</a></div>
+    </div>
+
+    <!-- Gallery -->
+    <h2 id="gallery">Photo Gallery</h2>
+    <div class="gallery">
+      <img src="images/gallery1.jpg" alt="Panchayat Bhavan"/>
+      <img src="images/gallery2.jpg" alt="School"/>
+      <img src="images/gallery3.jpg" alt="Temple"/>
+      <img src="images/gallery4.jpg" alt="Village scene"/>
+    </div>
+
+    <!-- Contact -->
+    <h2 id="contact">Contact</h2>
+    <p><strong>Office Address:</strong> Main Road, Gram Panchayat Wandhali, Taluka Warora, District Chandrapur, Maharashtra 442907</p>
+    <p><strong>Phone:</strong> +91-9764444266, +91-9764477566</p>
+    <p><strong>Follow:</strong> Facebook / YouTube / WhatsApp (links here)</p>
+  </div>
+
+  <footer>
+    &copy; 2025 Gram Panchayat Wandhali • Prototype site (Marathi default, English option planned)
+  </footer>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const center = [20.297783634514968,78.89031993796264];
+    const map = L.map('map').setView(center,14);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap'}).addTo(map);
+    L.marker(center).addTo(map).bindPopup('Wandhali');
+    const offset=0.0018;
+    const poly=[[center[0]-offset,center[1]-offset],[center[0]-offset,center[1]+offset],[center[0]+offset,center[1]+offset],[center[0]+offset,center[1]-offset]];
+    L.polygon(poly,{color:'#ff7800',weight:2,fillOpacity:0.06}).addTo(map).bindPopup('Approximate boundary');
+  </script>
+</body>
+</html>
